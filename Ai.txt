@@ -125,5 +125,58 @@ how many chunks to retrive
 exmaple enterprise level RAG -> Glean , Amazon Q 
 
 
+6.
+-> what is transformer 
+-> query and context is given 
+-> how does it knows the relationship between differen words 
+
+-> the boy went to shop becuase he needed milk 
+-> how will ai know he will refer to boy ??
+
+-> comes in picture transformer
+-> they saw the surrounding word and see the similarity 
+-> understand which word is more related to it 
+
+attention -> he -> boy -> 0.99
+             he -> milk -> 0.2
+             he -> market -> 0.1
+             he -> needed -> 0.2
+
+             therefore most imp to boy 
+
+llm trained huge amount of data 
+huge amount of text 
+learned patterns like -> a pronous near the start of the clause tends to refer back to a person mentioned earlier in the sentence 
+more such patterns can be learned by llm models 
+
+attention -> llm models -> helsp tp find relationship between words
+
+attention != transfomer 
+
+transfomrer is overall desgin -> made up many components 
+-> attention is one of the components 
+-> ffn , postion encoding etc 
+
+
+transfomrer architecture -> overall desgin used to built ai models 
+
+example -> chatgpt is built using transfomrer based desgins 
+
+
+llm -> trainded ai models 
+trasnfomrer -> design used to built that models 
+atention -> one of the key components
+
+
+RAG ->
+-> by query give relevcant info to the llm 
+
+transfomrer->
+-> its a design which says how a ai model process the language /context 
+
+
+both has maththematical calculation done but usecase is different in both cases 
+
+
 
 
