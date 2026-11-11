@@ -231,6 +231,41 @@ but there is a critical question ??
 how many tokens an llm models can actually look at once ??
 
 
+8.
+-> why is self attention is slow ??
+-> we can have millions of tokens 
+
+if we have n token -> therefore n*n comparions we have to do 
+-> problem is it will be very slow (to obatain attention score)
+
+but we do it using matrix multuplication 
+
+-> but still we have to do n*n calcuation 
+-> hardware samjna hoga 
+
+-> CPU -> BRAIN OF COMPUTER 
+-> GPU -> thousand of small cores -> parallel calculations
+// specilized for matrix mulpiltiplication / heavy calculatoin -> done paralleing 
+
+-> TPU -> machine learning / Deep learning
+// made by google 
+
+
+-> all though parallel calcualtion is done but amout of work is still the same (n*n)
+-> tones of calc -> tones of intermidiate resukt > thats huge amount of data 
+
+->flashattention 
+-> smarter way of orginzing attention calcualtion. by better use of GPU 
+
+
+more tokens -> more caclulation -> everything comes with a cost -> more tokens more cost involved 
+
+
+9.
+
+
+
+
 
 
 
