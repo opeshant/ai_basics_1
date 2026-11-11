@@ -7,3 +7,21 @@
 -> ultimate pattern guessser
 
 
+2.
+->what are tokens ?
+-> tokens are small peice of string / text
+-> i love ai -> i , love , ai tokens mai todh diya 
+-> a token is not always a complete word
+->playing -> play + ing 
+->hello! -> hello + !
+-> anything can be possbile 
+-> tokenizer desing is dependenet on kaise tutega 
+-->llm process these token and produce response 
+-> computer do not understand natural language 
+-> text -> tokens -> numbers -> llm process -> response generate 
+-> token is directly related to tokens 
+-> more tokens -> more cost
+-> more size -> more text -> more toekens -> more cost 
+
+
+
