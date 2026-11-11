@@ -1,0 +1,9 @@
+1.
+-> the wolrds most well round autocomplete 
+-> it looks at what u just typed and guess the next word possible 
+-> llm -> large learning model 
+->large -> trained on very huge data alsmost all interenet so prediction very perfect for any scenario
+->feesl like a real convo 
+-> ultimate pattern guessser
+
+
