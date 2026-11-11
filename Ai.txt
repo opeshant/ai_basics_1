@@ -262,6 +262,69 @@ more tokens -> more caclulation -> everything comes with a cost -> more tokens m
 
 
 9.
+->why cant ai remeber everything 
+
+->every quesry comapers with every key 
+
+->there is a limit for tokens to be used 
+
+-> context window
+
+previous info gives meaning for the current question 
+
+constext -> info avalidbale to the model that helps it understand what your talking about 
+
+-> context window -> max amount of info measured in tokens condider as its context for a particular request 
+
+
+-> context window -> converstion
+                  ->yyour query 
+                  ->previous messages 
+                  ->instructions
+                  ->other info given to model
+                  (all of these is a part of context window)
+
+
+what happens when context window become too long 
+
+-> cant fit 
+-> older info to removed 
+-> older info -> summarize 
+-> compact 
+
+rember rag -> was doing something retierve relveant info only
+
+
+context != memory 
+
+-> context -> current info avalibel to current interactions
+-> memory -> somehting that can be retained and brought back in future interactions (models knowledge and pattenrsn learned durint=g training )
+
+
+->bigger context window -> expensive 
+
+-> bigger context != better model
+-> training is imp not only context window 
+-> bigger context window means we can give more info but the model perfomrace is depenect on modek traingin
+
+-> very long context can also make it harder for a model to pinpoint the most 
+-> relevant deatil buired in the middle 
+-> lost in the middle effect 
+
+
+-> CONTEXT WINDOW -> 1 million token 
+-> input + file/uploads + models repsonse 
+-> all are inside context window 
+
+-> so nowadays models response is fixed now a days 
+-> capped by max output value (128k genrally value )
+
+
+if we want to generate more output 
+->latency can inc 
+-> more cost 
+
+
 
 
 
