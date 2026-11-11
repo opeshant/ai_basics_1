@@ -23,5 +23,33 @@
 -> more tokens -> more cost
 -> more size -> more text -> more toekens -> more cost 
 
+3.
+->what is embedding ?
+->every token -> has a token id (specific to which ai ur using )
+->token id is assigned by fixed vocalbulary (every ai has its own vocalbulary)
+->for example 
+u0120an": 281, "al": 282, "ar": 283, "\u0120to": 284, "\u0120m": 285, "\u0120of"
+ dog -> id : 500
+ puppy -> id : 9421
+ aeroplane -> id :501
+
+ -> we cannot comapre similarity by token id
+ -> as u can see above 
+
+ text -> tokens -> token id ->(embedding matrix) -> vector of floating numbers 
+ dog -> [0.9 , 0.9 , 0.2] (examples)
+        3 dimesion 
+        [hastail , petlike , can fly] (dimesion names)
+
+if we want similairty then do dot product ->
+->who has assign the number 
+-> during training it has learn this numerical represwntation or vector 
+
+->ai found answers meaning rather than matching exact words 
+
+
+
+
+
 
 
