@@ -90,3 +90,40 @@ vector db -> stores + search
 -> gives a api key and then u can do query and fetch the data 
 
 
+5.
+what is RAG ?
+llm has trained over internet -> but not aware of internal documents (company)
+llm training is costly picture 
+
+company document -> extract texts -> split into chunks -> embedding models -> vector db insert 
+// how to give these info to llm 
+
+pdf -> into different chunks 
+
+retriveal auhmental genration 
+(RAG) -> extra info increase karre hai 
+
+-> RAG Workflow 
+-> relvant chunks ko nikal ko vector db se 
+-> user query + retrived context (extra chunk)
+-> these is given to llm 
+->will be abel to answer it 
+
+
+why RAG is useful ?
+-> llm does not need to knwo everyhting itself 
+-> we can give it relevent info when needed 
+
+RAG is workflow or Architecture 
+chunk size -> too big -> noisy context 
+           -> too small -> meanig lose
+
+embedding models -> choice is taken based on what is used case
+
+how many chunks to retrive 
+
+exmaple enterprise level RAG -> Glean , Amazon Q 
+
+
+
+
