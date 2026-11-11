@@ -177,6 +177,62 @@ transfomrer->
 
 both has maththematical calculation done but usecase is different in both cases 
 
+attention helps the models understand which words are importtant to each other based on learned patterns 
+
+
+
+7.
+what is q k v in attention
+Q , K , V 
+Query , key  , value 
+
+how is the attenstion doing this ??/
+
+-> we get differen embedding 
+-> trasnfomrer do it what one embeddiong is brokejn down into
+-> Q , K , V (for each token )
+
+why ??
+aapne ky pucha ?? -> Q 
+what is key -> k(helping me to identify how relevant is that to the query)
+each book can provide info to what u need -> Value 
+
+the -> Q K V 
+cat -> Q K V 
+is -> Q K V 
+
+suppose query is "the" word -> so Q of the is then compared with K of the remianing words 
+
+that gives attention score(how strong is the match)
+
+the (Q) + cat(k) -> therefore cat V gets more wieghtage 
+
+
+attention socre is passed through softmax 
+gives probability distribution 
+how much value of each token should contribute 
+
+
+by attention we can know how much one token is similar to another token 
+
+token -> token id -> embedding -> (transfomrer) -> Q , K , V -> attention score -> softmax -> attenstion wirghts -> combine -> final attention 
+ 
+ Q , K -> decide relevancy 
+ attention score -> how strong is the match 
+ softmax -> wiegth (probabilty distribution)
+ wiegths -> how much info(value) to take 
+
+
+the tokens are looking  at other tokens from the same input
+-> its called self attention
+
+
+but there is a critical question ??
+how many tokens an llm models can actually look at once ??
+
+
+
+
 
 
 
