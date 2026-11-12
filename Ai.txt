@@ -325,8 +325,53 @@ if we want to generate more output
 -> more cost 
 
 
+10.
+-> what are parameters ??
+-> how did it learn
+-> what did it learn ??
+->where are those learnings stored ??
+
+-> this llm has 8b , 70b llm 
+-> 8 billion parameters are there 
+
+example -> the cat drank the ---- ??
+guess -> water 
+but correct is milk 
+
+somehow the models need to improve 
+-> compare ist prediction with the correct answer 
+-> make small adustment to whatever mathematicsal numbers it has inisdei it 
+
+-> try again and again 
+->overtime -> llm get better and better 
+->learns the patterns 
+
+-> predicts -> check -> adjust -> repeat 
+(these is called training)
+-> the numbers -> models learns\adjust dusring traingin
+
+paramters -> wieghts(w) and bias(b)
+
+nueral network -> mathematical system helps computers learns to slove complex prolems 
+
+paramters ->
+many dials are there 
+-> one time is there -> when dials are set to values that helps 
+
+// knowlefgde is spread out in 7billion parameters 
+
+// combined interatction of millions of parameters -> output 
+
+more paramter is not proprotional to better model -> not neccessary 
+
+-> depends on -> quality of data , how it is trainded , what task on trainded , model desgin , 
+
+-> large model -> more memory -> more compyting power
+
+ ->paramters -> are learned numbers inside ai that helps it recognize patterns and genrate output same
 
 
+-> paramter -> start at random -> builts up in the process
 
 
 
