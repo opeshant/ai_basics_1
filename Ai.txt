@@ -478,7 +478,53 @@ many techniques are avalibel -> RAG
                              -> these are to improve these hallucination of ai 
 
                 
+13.
 
+
+langchain and langgraph 
+-> what are these 
+
+-> langchain is framework -> pre made template
+-> helps around making application around llm 
+-> makes things easy to make aaplication around llm 
+
+
+-> langchain provides building blocks for constructing such application -> gives resuabel componenets 
+-> example -> sort () in c++. (easier). langchain is doing the same 
+
+-> langchain != llm (framework to developer application around llm )
+
+-> RAG (architecture)
+-> langchain helps to make this RAG -> in a easy manner using prdefined functions 
+
+
+->langGrph 
+-> BUILDING MORE COMPLEX , MULTI SETP AI AGENTS 
+->what is ai agent need to make decision and go back and froth 
+-> this is more complex
+
+-> no stargth forward workflow 
+->langgraph helps in such places 
+-> ai workflow is something equivalent to graph 
+-> edges and nodes are there 
+-> theefore called langgrpah 
+
+
+-> did langraph replace langchain 
+-> not completely 
+
+
+->what is state in langgraph 
+
+->state -> shared data structure to store current snapchapt / memory of the worflow 
+
+->langgraph -> sequnce + looping + decision + state + branching 
+(these provided are provided by langrgaph)
+
+->chain in langchain -> sequence of operation chained together 
+
+
+ai agent -> ai system can  decide on its own what action can it take -> (langgraph in picture )
 
 
 
