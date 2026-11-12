@@ -419,9 +419,65 @@ wait isnt same as RAG ??/
 difference between RAG and fine tuning 
 
 
+12.
 
+-> inderence , temperation and hallucination 
+
+-> using a trained ai model to prodeuce an answer from what we given 
+-> we want to infere what type of answer it gives
+
+
+-> why can ai given differen asnwers 
+
+ex -> give me a creative name for coffe shop
+-> can give different answer for same qwuestion 
+
+-> temperature -> when ai is genrating text -> does not choose randmly -> consider diff porb -> or socres -> caalled logit -
+-> choose the best answer -> it depend on temprature setting 
+-> temprature is a type of parameters -> kam or zyada so alag alag tarah ke answers aa sakte hai 
+
+-> temprature -> how strongly it will prefer the most likely choices 
+
+temp low -> modesl tend to prefer most likely choice 
+
+sun ries in 
+    -> east (temp is lowest) (prob is highest)
+    -> morning 
+    -> sky (temp is highest) (prob is lowest )
  
+ if temp is more -> less likely choices have more probbality to be choosen 
+ -> unpredictable token can also be choosen 
 
+ -> this is what makes ai creative 
+ 
+ -> low temp -> more predictable output 
+ -> high temp -> more creatuve output 
+
+ -> where to change -> code/api level we can change it (for developer)
+
+
+ hallucination -> most imp know real limitation 
+
+ -> input -> llm -> confidently gives wrong answer 
+-> is ai lyginh -> ai doesnot know its wrong 
+
+-> likely response based on patterns it has learned and the context 
+
+-> it does not look things up by default 
+->it doesnot have built in "i dont know reflex"
+-> gaps or error in training data 
+
+
+-> example -> an ai is trained on 2024 data and we ask something from 2026 then something like this can happens 
+
+-> plausible response != verified answers 
+many techniques are avalibel -> RAG 
+                             -> External web search 
+                             -> metioninig / flagging gaps
+
+                             -> these are to improve these hallucination of ai 
+
+                
 
 
 
