@@ -1,0 +1,994 @@
+AI & LLM FUNDAMENTALS — COMPLETE NOTES
+======================================
+
+13 TOPICS | BEGINNER TO INTERMEDIATE
+
+These notes cover LLMs, tokens, embeddings, vector databases, RAG, Transformers,
+attention, Q/K/V, self-attention performance, context windows, parameters,
+pre-training, fine-tuning, inference, temperature, hallucinations, LangChain,
+LangGraph, and AI agents.
+
+------------------------------------------------------------
+1. WHAT IS AN LLM?
+------------------------------------------------------------
+
+LLM stands for Large Language Model.
+
+An LLM is an AI model trained on a massive amount of text data to understand
+and generate human-like language.
+
+Think of it as an advanced autocomplete system:
+- It looks at the text you have written.
+- It analyzes the context.
+- It predicts what token is likely to come next.
+- It continues generating tokens to produce a response.
+
+Example:
+Input: "The capital of India is"
+Possible prediction: "New Delhi"
+
+Why does it feel like a real conversation?
+LLMs learn patterns from enormous amounts of text, including:
+- Language and grammar.
+- Questions and answers.
+- Human conversations.
+- Programming languages.
+- Different topics and domains.
+
+Important:
+An LLM is not simply searching the internet for answers. It generates responses
+using patterns learned during training and the context provided during inference.
+
+An LLM is a powerful pattern learner and next-token predictor.
+
+------------------------------------------------------------
+2. WHAT ARE TOKENS?
+------------------------------------------------------------
+
+A token is a small unit of text that an LLM processes.
+
+A token can be:
+- A complete word.
+- Part of a word.
+- A punctuation mark.
+- A combination of characters.
+
+Examples (illustrative splits):
+- "I love AI" -> "I", "love", "AI"
+- "Playing" -> "Play", "ing"
+- "Hello!" -> "Hello", "!"
+- "Unbelievable" -> "Un", "believ", "able"
+
+Actual tokenization depends on the tokenizer.
+
+What is a tokenizer?
+A tokenizer converts text into tokens according to a vocabulary and a set of
+tokenization rules. Different models can use different tokenizers and vocabularies.
+
+How does an LLM process text?
+
+Human text
+   |
+   v
+Tokenization
+   |
+   v
+Token IDs (numbers)
+   |
+   v
+Embeddings
+   |
+   v
+LLM processing
+   |
+   v
+Generated response
+
+Why are tokens important?
+Tokens are related to:
+- API usage.
+- Processing requirements.
+- Context-window limits.
+- Model inference costs.
+
+Generally, more tokens require more computation and can increase cost.
+Input and output tokens may have different prices depending on the model/provider.
+
+------------------------------------------------------------
+3. WHAT ARE EMBEDDINGS?
+------------------------------------------------------------
+
+Every token in a model's vocabulary has a unique numerical ID.
+
+Example (illustrative):
+dog        -> 500
+puppy      -> 9421
+aeroplane  -> 501
+
+Token IDs identify vocabulary entries. They do NOT represent word meaning.
+Therefore, we cannot measure semantic similarity by comparing token IDs.
+
+What is an embedding?
+An embedding is a numerical representation of a token or other data, represented
+as a dense vector of floating-point numbers.
+
+Illustrative vectors:
+dog        -> [0.9, 0.8, 0.2]
+puppy      -> [0.85, 0.82, 0.25]
+aeroplane  -> [0.1, 0.2, 0.95]
+
+Each position is called a dimension. Real embeddings may have hundreds or
+thousands of dimensions. These dimensions usually do not have simple,
+human-readable meanings such as "has tail" or "can fly".
+
+How are embeddings generated?
+During training, a model learns numerical representations through mathematical
+optimization. These representations capture useful patterns and relationships.
+
+How do embeddings help with similarity?
+Texts with similar meanings often have vectors that are close in embedding space.
+
+Example:
+- "I love coffee."
+- "Coffee is my favourite beverage."
+
+These sentences have similar meanings, so their embeddings may be close.
+"I bought an iPhone" is about a different topic, so its embedding may be farther away.
+
+Common similarity/distance methods:
+1. Cosine similarity.
+2. Dot product.
+3. Euclidean distance.
+
+Cosine similarity compares the direction of two vectors.
+
+Complete process:
+Text -> Tokens -> Token IDs -> Embedding matrix -> Numerical vectors
+
+Key takeaway:
+Embeddings convert text into numerical representations that capture useful
+semantic relationships.
+
+------------------------------------------------------------
+4. WHAT IS A VECTOR DATABASE?
+------------------------------------------------------------
+
+A vector database is a database designed to store, index, and efficiently search
+high-dimensional vectors. It can also store metadata and references to original text.
+
+Why do we need it?
+Imagine a company has thousands of documents:
+- HR policies.
+- Work-from-home policies.
+- Technical documentation.
+- Employee guidelines.
+- Internal company rules.
+
+We convert document chunks into embeddings and store them in a vector database.
+
+Suppose an employee asks:
+"Can I work remotely?"
+
+The original document might say:
+"Employees are permitted to work from home twice a week."
+
+Even though the exact words differ, their meanings are similar. A vector database
+can retrieve relevant information using semantic similarity.
+
+Example:
+Vector A: "I love coffee."
+Vector B: "Coffee is my favourite beverage."
+Vector C: "I bought an iPhone."
+
+A and B are likely to be close in vector space. C is likely to be farther away.
+
+Query: "What beverage do we enjoy?"
+The database may retrieve A and B because they are semantically relevant.
+
+This is called SEMANTIC SEARCH: finding information based on meaning rather
+than only matching exact words.
+
+What can a vector database store?
+- Vector: numerical embedding.
+- ID: unique identifier.
+- Metadata: additional information.
+- Content: original text or a reference to it.
+
+Popular vector databases:
+- Pinecone: https://www.pinecone.io/
+- Weaviate: https://weaviate.io/
+- Milvus: https://milvus.io/
+
+Some platforms also provide integrated embedding and indexing workflows.
+
+Remember:
+- Embedding model -> Generates vectors.
+- Vector database -> Stores and searches vectors.
+- Semantic search -> Finds information based on meaning.
+
+------------------------------------------------------------
+5. WHAT IS RAG?
+------------------------------------------------------------
+
+RAG stands for Retrieval-Augmented Generation.
+
+It is an architecture that allows an LLM to answer questions using external
+information that may not have been included in its original training data.
+
+Why do we need RAG?
+An LLM might not know:
+- Internal company documents.
+- Private HR policies.
+- Recently updated documentation.
+- Specific information about an organization.
+
+Retraining an entire LLM every time a document changes is often expensive
+and unnecessary. RAG supplies relevant information when it is needed.
+
+RAG has two broad stages:
+
+A. DATA INGESTION (usually done before a user asks a question)
+
+1. Document extraction:
+   Extract text from PDFs, Word documents, websites, etc.
+
+2. Chunking:
+   Split large documents into smaller pieces called chunks.
+
+3. Embedding generation:
+   Convert each chunk into a numerical vector using an embedding model.
+
+4. Storage:
+   Store vectors, original text, and metadata in a vector database.
+
+Flow:
+Company documents/PDFs
+   -> Text extraction
+   -> Chunking
+   -> Embedding model
+   -> Vector database
+
+B. RETRIEVAL AND GENERATION (when the user asks a question)
+
+1. User asks a question.
+2. Convert the query into an embedding.
+3. Search the vector database for relevant chunks.
+4. Send the original query and retrieved context to the LLM.
+5. The LLM generates an answer using that context.
+
+Flow:
+User query
+   -> Query embedding
+   -> Vector database retrieval
+   -> Relevant context + user query
+   -> LLM
+   -> Final answer
+
+Why is RAG useful?
+- No need to retrain the entire LLM for every document update.
+- Allows LLMs to work with private information.
+- Helps provide relevant, grounded answers.
+- Documents can be updated independently.
+
+Important RAG concepts:
+
+1. Chunk size:
+   - Too large: can introduce irrelevant/noisy context.
+   - Too small: can lose important meaning and context.
+
+2. Embedding model:
+   Choose based on use case, language, accuracy requirements, and cost.
+
+3. Top-K retrieval:
+   Determines how many relevant chunks to retrieve.
+   Example: Top-K = 5 means retrieving five matching chunks.
+
+4. Metadata filtering:
+   Filters results by document type, department, date, permissions, etc.
+
+Examples of enterprise AI/search products:
+- Glean
+- Amazon Q
+
+Remember:
+RAG is an architecture/workflow, not an LLM or a vector database.
+
+------------------------------------------------------------
+6. WHAT IS A TRANSFORMER?
+------------------------------------------------------------
+
+How does an LLM understand relationships between words in a sentence?
+
+Example:
+"The boy went to the shop because he needed milk."
+
+How can the model learn that "he" refers to "the boy"?
+
+This is where the Transformer architecture and attention mechanisms are useful.
+
+Attention helps a model determine how much different tokens should influence
+one another while processing a sequence.
+
+Illustrative attention scores:
+He -> Boy      0.99
+He -> Milk     0.20
+He -> Shop     0.10
+He -> Needed   0.30
+
+These are illustrative values, not actual model scores.
+
+What is a Transformer?
+A Transformer is a neural-network architecture designed to process sequences
+using attention mechanisms and other components.
+
+Important components include:
+- Self-attention.
+- Feed-forward neural networks (FFN).
+- Positional information/encodings.
+- Normalization layers.
+- Residual connections.
+
+Transformer vs Attention vs LLM:
+- LLM: a trained large language model.
+- Transformer: an architecture used to build neural networks.
+- Attention: a mechanism used inside the architecture.
+
+ChatGPT uses Transformer-based model architectures.
+
+RAG and Transformers solve different problems:
+- RAG retrieves relevant external information for an LLM.
+- A Transformer processes information and learns relationships between tokens.
+
+------------------------------------------------------------
+7. WHAT ARE Q, K, AND V IN ATTENTION?
+------------------------------------------------------------
+
+Q, K, and V stand for:
+- Q -> Query
+- K -> Key
+- V -> Value
+
+Library analogy:
+You want to find a book about Artificial Intelligence.
+- Query: What information are you looking for?
+- Key: What information helps determine each book's relevance?
+- Value: The actual information inside the book.
+
+This is a simplified analogy.
+
+How Q, K, V work:
+Every token embedding is transformed into three vectors:
+- Query vector (Q).
+- Key vector (K).
+- Value vector (V).
+
+These vectors are calculated using learned weight matrices.
+
+Step-by-step attention:
+
+1. Generate Q, K, V:
+   Every token gets its own Q, K, and V vectors.
+
+2. Calculate attention scores:
+   The Query of one token is compared with the Keys of other tokens using
+   dot products. This measures their compatibility/relevance.
+
+3. Apply Softmax:
+   Softmax converts scores into normalized weights that sum to 1.
+
+   Illustrative weights:
+   The       0.10
+   Cat       0.70
+   Is        0.10
+   Sleeping  0.10
+   Total     1.00
+
+4. Combine values:
+   Multiply each attention weight by its corresponding Value vector and combine
+   the weighted values to produce the attention output.
+
+Scaled Dot-Product Attention formula:
+
+Attention(Q, K, V) = Softmax((Q K^T) / sqrt(d_k)) V
+
+Where:
+- Q = Query matrix.
+- K = Key matrix.
+- V = Value matrix.
+- d_k = Dimension of key vectors.
+
+Dividing by sqrt(d_k) helps control the magnitude of attention scores.
+
+What is self-attention?
+When tokens attend to other tokens within the same input sequence, it is called
+self-attention.
+
+Remember:
+- Q and K -> Determine compatibility/relevance.
+- Attention scores -> Measure compatibility.
+- Softmax -> Converts scores into weights.
+- V -> Supplies the information being combined.
+
+------------------------------------------------------------
+8. WHY IS SELF-ATTENTION SLOW?
+------------------------------------------------------------
+
+Suppose an input contains N tokens.
+
+In standard full self-attention, every token can compare itself with every
+other token. The attention score matrix therefore has N x N entries.
+
+The score-matrix size scales quadratically with sequence length: O(N^2).
+
+Examples:
+100 tokens      -> 10,000 score entries
+1,000 tokens    -> 1,000,000 score entries
+10,000 tokens   -> 100,000,000 score entries
+100,000 tokens  -> 10,000,000,000 score entries
+
+As the number of tokens increases, the attention matrix becomes very large.
+
+CPU vs GPU vs TPU:
+
+CPU (Central Processing Unit):
+- General-purpose processor.
+- Handles a wide variety of tasks.
+
+GPU (Graphics Processing Unit):
+- Contains many processing units.
+- Effective at parallel mathematical operations, including matrix multiplication.
+
+TPU (Tensor Processing Unit):
+- Specialized accelerator developed by Google for machine-learning workloads.
+
+What is FlashAttention?
+FlashAttention is an optimized attention algorithm.
+
+It improves efficiency by:
+- Reducing unnecessary memory transfers.
+- Better utilizing GPU memory.
+- Computing attention in blocks/tiles.
+- Avoiding the need to materialize the entire attention matrix in high-bandwidth
+  memory.
+
+Important:
+FlashAttention does not eliminate the fundamental quadratic computation of
+standard full attention. It makes the computation more memory-efficient.
+
+Key takeaway:
+More tokens -> More attention calculations -> More computation and memory
+requirements -> Potentially higher latency and cost.
+
+------------------------------------------------------------
+9. WHY CAN'T AI REMEMBER EVERYTHING?
+------------------------------------------------------------
+
+An LLM does not automatically remember every previous conversation forever.
+
+What is context?
+Context is the information available to the model when generating a particular
+response.
+
+Example:
+If you ask "What is its use?", the model needs previous information to understand
+what "its" refers to. That previous information is part of the context.
+
+What is a context window?
+A context window is the maximum amount of information, measured in tokens,
+that a model can process as context for a particular request.
+
+It can include:
+- Current query.
+- Previous conversation messages.
+- System instructions.
+- Uploaded files or their extracted content.
+- Retrieved RAG documents.
+- Other information supplied to the model.
+
+What happens when the context window becomes full?
+Depending on the application, older information may be:
+1. Removed or truncated.
+2. Summarized.
+3. Compacted into a shorter representation.
+4. Retrieved again from external storage when needed.
+
+Context vs Memory vs Training Knowledge:
+
+Context:
+Information available during the current request.
+
+Memory:
+Information retained and potentially brought back in future interactions.
+
+Training knowledge:
+Patterns and information learned during model training.
+
+Does a bigger context window mean a better model?
+Not necessarily. A larger context window allows a model to process more
+information, but it does not automatically make the model smarter.
+
+Performance also depends on:
+- Training data.
+- Model architecture.
+- Training methods.
+- Reasoning capabilities.
+- Quality of retrieved information.
+
+Lost in the Middle effect:
+A model can sometimes struggle to retrieve important details located in the
+middle of a very long context. This is commonly called the Lost in the Middle effect.
+
+Context window vs maximum output tokens:
+- Context window: maximum information available in the request.
+- Maximum output tokens: maximum number of tokens the model can generate.
+
+A model can support a large context window but have a much smaller maximum
+output limit.
+
+------------------------------------------------------------
+10. WHAT ARE PARAMETERS IN AN LLM?
+------------------------------------------------------------
+
+You may have heard terms such as:
+- 7B model.
+- 8B model.
+- 70B model.
+- 405B model.
+
+B stands for Billion. An 8B model has approximately 8 billion parameters.
+
+What are parameters?
+Parameters are learned numerical values inside a neural network that determine
+how it processes input and generates output.
+
+Two common types of neural-network parameters are:
+1. Weights.
+2. Biases.
+
+How does a model learn?
+
+Example:
+Input: "The cat drank the ____"
+
+The model predicts "water", but the expected answer in a training example is
+"milk".
+
+The model calculates how far its prediction is from the expected answer using
+a loss function.
+
+An optimization algorithm then adjusts the parameters to reduce the loss.
+This process is repeated over enormous amounts of training data.
+
+Simplified training process:
+Input training data
+   -> Model prediction
+   -> Calculate loss
+   -> Backpropagation
+   -> Update parameters
+   -> Repeat
+
+What is a neural network?
+A neural network is a mathematical system inspired loosely by biological brains.
+It contains interconnected computational units arranged in layers. These units
+process information using mathematical operations and learned parameters.
+
+Where is the knowledge stored?
+Learned patterns are distributed across the model's parameters. There is no
+simple one-to-one mapping such as "parameter 1 knows dogs". Information is
+represented through complex interactions among many parameters.
+
+Does more parameters mean a better model?
+Not necessarily. Performance depends on:
+- Quality and amount of training data.
+- Training methods.
+- Model architecture.
+- Compute resources.
+- Number of parameters.
+
+Larger models generally require more memory and computational resources.
+
+Key takeaway:
+Parameters are learned numerical values that allow an AI model to recognize
+patterns and generate outputs.
+
+------------------------------------------------------------
+11. PRE-TRAINING VS FINE-TUNING
+------------------------------------------------------------
+
+Models such as ChatGPT, Gemini, and Claude go through different stages of
+training and post-training.
+
+A. PRE-TRAINING
+
+Pre-training is the initial large-scale training stage. The model is trained
+on massive datasets to learn general patterns in language and other data.
+
+It can learn:
+- Grammar.
+- Language structures.
+- Relationships between words.
+- General knowledge patterns.
+- Programming patterns.
+- Statistical relationships.
+
+Common pre-training objectives:
+
+1. Causal Language Modeling (CLM)
+The model predicts the next token based on previous tokens.
+
+Example:
+"The sun rises in the ___"
+Prediction: "East"
+
+This is commonly used for decoder-only models such as GPT-style models.
+
+2. Masked Language Modeling (MLM)
+A token is hidden, and the model predicts it using surrounding context.
+
+Example:
+"The sun [MASK] in the east."
+Prediction: "rises"
+
+The model can use both left and right context. This is commonly associated with
+BERT-style encoder models.
+
+3. Next Sentence Prediction (NSP)
+An auxiliary objective used in the original BERT training setup. The model
+predicts whether one sentence follows another in the original text.
+
+Example:
+Sentence A: "I went to the kitchen."
+Sentence B: "I prepared some food."
+
+The model predicts whether B follows A.
+
+Note:
+NSP is not a universal pre-training objective and is not used by every modern LLM.
+
+Result of pre-training:
+Untrained model -> Pre-training -> Base model
+
+A base model has general language/data capabilities, but it is not necessarily
+ready to behave like a helpful conversational assistant or reliably follow
+instructions.
+
+B. FINE-TUNING
+
+Fine-tuning means taking an already pretrained model and training it further
+on a more specific dataset.
+
+Example:
+A pretrained model already understands general language. We can further train
+it on carefully curated medical-documentation examples to adapt it to a
+specialized task.
+
+Fine-tuning adjusts model parameters based on the new training data.
+
+Fine-tuning vs Prompting:
+- Fine-tuning: further trains the model and updates parameters.
+- Prompting: gives instructions to the model; it does not normally update
+  model parameters.
+
+RAG vs Fine-tuning:
+- RAG retrieves external information and supplies it through context.
+- Fine-tuning further trains the model and updates its parameters.
+- RAG is useful for changing/private information.
+- Fine-tuning can be useful for adapting behavior or task-specific capabilities.
+
+Examples:
+- Answer questions from the latest company HR policy -> RAG.
+- Consistently follow a specialized output format or task-specific behavior ->
+  fine-tuning may help.
+
+Remember:
+A prompt saying "Act like a doctor" does not guarantee expertise or correctness.
+
+------------------------------------------------------------
+12. INFERENCE, TEMPERATURE, AND HALLUCINATION
+------------------------------------------------------------
+
+A. WHAT IS INFERENCE?
+
+Inference is the process of using an already trained AI model to generate
+predictions or outputs from new input.
+
+In simple terms:
+- Training -> Teaching the model.
+- Inference -> Using the trained model.
+
+Example:
+You ask an AI: "Suggest a creative name for my coffee shop."
+The model processes the prompt and generates a response. This is inference.
+
+B. WHAT IS TEMPERATURE?
+
+AI can generate different answers even when asked the same question multiple
+times. One reason is sampling during generation.
+
+The model calculates scores called logits for possible next tokens. These scores
+are converted into probabilities, usually through Softmax.
+
+Temperature modifies the logits before Softmax and controls how strongly the
+model favors higher-probability tokens when sampling.
+
+Low temperature:
+- More predictable outputs.
+- Stronger preference for high-probability tokens.
+- Usually more consistent responses.
+
+High temperature:
+- More variation in output.
+- Lower-probability tokens can become more likely.
+- Can produce more surprising or creative responses.
+
+Temperature comparison:
+- Low -> More predictable.
+- Medium -> Balanced variation.
+- High -> More diverse and unpredictable.
+
+Developers can configure temperature through supported model APIs or inference
+interfaces. Not every model/API exposes the same sampling controls.
+
+C. WHAT IS HALLUCINATION?
+
+Hallucination occurs when an AI model generates information that sounds
+convincing but is incorrect, unsupported, or fabricated.
+
+Example:
+You ask an AI about a research paper that does not exist. The AI might generate:
+- A fake paper title.
+- Fake authors.
+- A fake publication date.
+
+Why can hallucinations happen?
+- Missing information.
+- Ambiguous prompts.
+- Incorrect training data.
+- Outdated knowledge.
+- Weak or irrelevant retrieved context.
+- Uncertainty in the model's predictions.
+
+How can we reduce hallucinations?
+1. RAG: Supply relevant documents.
+2. External search: Retrieve up-to-date information.
+3. Source citations: Ask the model to support factual claims with sources.
+4. Validation: Verify important outputs against trusted sources.
+5. Uncertainty handling: Allow the model to say when information is unavailable.
+
+Important:
+Plausible response does not mean verified answer.
+An answer can sound confident and still be wrong.
+
+------------------------------------------------------------
+13. WHAT ARE LANGCHAIN AND LANGGRAPH?
+------------------------------------------------------------
+
+Now that we understand LLMs, embeddings, RAG, Transformers, and training,
+let's understand how developers build real-world AI applications.
+
+A. WHAT IS LANGCHAIN?
+
+LangChain is a framework that provides reusable building blocks for developing
+applications powered by LLMs.
+
+Think of it like using predefined functions in C++.
+
+Example:
+Instead of writing sorting logic from scratch, you can use:
+sort(arr.begin(), arr.end());
+
+Similarly, LangChain provides reusable components that simplify building
+LLM applications.
+
+LangChain provides components for:
+- Model integrations.
+- Prompt templates.
+- Document loaders.
+- Text splitters.
+- Embedding integrations.
+- Vector-store integrations.
+- Retrieval components.
+- Tool integrations.
+
+Example: Building RAG
+Without a framework, you may need to write code for:
+1. Reading PDF files.
+2. Extracting text.
+3. Splitting text into chunks.
+4. Generating embeddings.
+5. Storing vectors.
+6. Retrieving relevant chunks.
+7. Sending context to an LLM.
+
+LangChain provides reusable components to simplify many of these steps.
+
+Important:
+LangChain is not an LLM. It is a framework for building applications around LLMs.
+
+B. WHAT IS LANGGRAPH?
+
+LangGraph is a framework for building stateful, multi-step AI workflows and agents.
+
+It is useful when an AI application needs:
+- Multiple steps.
+- Conditional decisions.
+- Loops.
+- Branching.
+- Tool execution.
+- Shared state.
+- Human approval.
+
+Why do we need LangGraph?
+
+Imagine building an AI travel-booking agent:
+1. Understand the user's destination.
+2. Collect travel dates.
+3. Search for available flights.
+4. Compare prices.
+5. Ask the user for confirmation.
+6. Book the selected flight.
+
+This is not necessarily a simple straight-line workflow. The agent may need
+to ask questions, try another search, compare alternatives, make decisions,
+or wait for user approval.
+
+LangGraph helps developers structure these complex workflows.
+
+Why is it called LangGraph?
+A workflow is represented as a graph:
+- Nodes -> Individual tasks or operations.
+- Edges -> Connections between tasks.
+- Conditional edges -> Decide which path to follow.
+
+Example workflow:
+User query
+   -> Understand request
+   -> Search flights
+   -> Results found?
+       -> Yes: Compare prices
+       -> No: Ask user for alternatives, then search again
+   -> Ask for confirmation
+   -> User approved?
+       -> Yes: Book flight
+       -> No: End
+
+C. WHAT IS STATE IN LANGGRAPH?
+
+State is a shared data structure that stores the current information of a workflow.
+
+Think of it as shared memory for the workflow.
+
+Example:
+
+const state = {
+    destination: "Delhi",
+    travelDate: "2026-12-15",
+    budget: 10000,
+    availableFlights: [],
+    selectedFlight: null,
+    bookingStatus: "pending"
+};
+
+Different nodes can read and update this state as the workflow progresses.
+
+Example:
+The search node updates availableFlights.
+The comparison node reads those flights.
+The confirmation node can read the selected flight.
+
+D. LANGCHAIN VS LANGGRAPH
+
+LangChain:
+- Provides reusable LLM application components.
+- Useful for model integrations and RAG.
+- Provides building blocks for applications and pipelines.
+
+LangGraph:
+- Orchestrates stateful workflows.
+- Useful for complex agents.
+- Supports branching, looping, and shared state.
+
+Does LangGraph replace LangChain?
+No, not completely. They solve related but different problems and can be used together.
+
+E. WHAT IS AN AI AGENT?
+
+An AI agent is an AI-powered system that can decide what action to take, use
+tools, observe results, and continue working toward a goal.
+
+Simple LLM application:
+User query -> LLM -> Response
+
+Agentic application:
+User query
+   -> LLM decision
+   -> Choose tool
+   -> Execute tool
+   -> Observe result
+   -> Decide next action
+   -> Final response
+
+An agent can use an LLM as its reasoning component and external tools to perform
+actions.
+
+------------------------------------------------------------
+FINAL REVISION: CONNECT ALL 13 CONCEPTS
+------------------------------------------------------------
+
+1. LLM:
+   A model trained to understand and generate language.
+
+2. Tokens:
+   Small text units processed by an LLM.
+
+3. Embeddings:
+   Numerical vectors representing text or other data.
+
+4. Vector database:
+   Stores, indexes, and searches vectors.
+
+5. RAG:
+   Retrieves external information and supplies it to an LLM.
+
+6. Transformer:
+   Neural-network architecture used by many modern LLMs.
+
+7. Q/K/V:
+   Query and Key determine attention scores; Value supplies information.
+
+8. Self-attention performance:
+   Standard full attention has quadratic scaling with sequence length.
+   GPUs and FlashAttention help improve execution efficiency.
+
+9. Context window:
+   Maximum information the model can process as context for a request.
+
+10. Parameters:
+    Learned numerical values inside the model.
+
+11. Pre-training and fine-tuning:
+    Initial broad training and further task-specific/adaptation training.
+
+12. Inference, temperature, hallucination:
+    Using the model, controlling sampling variation, and understanding
+    potentially incorrect generated information.
+
+13. LangChain and LangGraph:
+    Tools/frameworks for building LLM applications and stateful AI workflows.
+
+------------------------------------------------------------
+IMPORTANT DIFFERENCES — QUICK REVISION
+------------------------------------------------------------
+
+Token vs Embedding:
+Token is a text unit; embedding is its numerical representation.
+
+Token ID vs Embedding:
+Token ID is an integer identifier; embedding is a vector.
+
+Embedding Model vs Vector Database:
+Embedding model generates vectors; vector database stores and searches vectors.
+
+RAG vs Fine-tuning:
+RAG retrieves external context; fine-tuning updates model parameters.
+
+Transformer vs Attention:
+Transformer is an overall architecture; attention is one of its mechanisms.
+
+Q/K vs V:
+Q and K determine compatibility/relevance; V supplies information to combine.
+
+Context vs Memory:
+Context is information available to the current request; memory is information
+retained and potentially brought back in future interactions.
+
+Parameters vs Tokens:
+Parameters are learned model values; tokens are units of input/output text.
+
+Training vs Inference:
+Training changes learned model parameters; inference uses the trained model
+to generate predictions.
+
+LangChain vs LangGraph:
+LangChain provides LLM application building blocks; LangGraph orchestrates
+stateful workflows with branching and loops.

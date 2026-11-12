@@ -527,4 +527,9 @@ langchain and langgraph
 ai agent -> ai system can  decide on its own what action can it take -> (langgraph in picture )
 
 
+******************
+REFER TO THIS CHAT IF U WANNA SEE MORE 
+https://chatgpt.com/c/6af5a205-dd4c-83ee-b713-45976ff5e283
+******************
+
 
