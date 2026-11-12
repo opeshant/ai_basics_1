@@ -374,6 +374,53 @@ more paramter is not proprotional to better model -> not neccessary
 -> paramter -> start at random -> builts up in the process
 
 
+11.
+
+chatgpt / gemini / cluade -> how ai models can get good at specifc task how did they get this ??
+ 
+llm -> first stage of traning is called pre training 
+-> massive data -> to undestand patternms and genrate output 
+
+pre training ->
+   1 -> predic the next token (casual language model)(CLM)
+   2 -> masking sentences (MLM) masked long modelling 
+   2 one is birectional becuase aaage piche dono taraf se dekhna hota hai
+
+   3-> next sentence prediction (NSP)
+   which sentecne comes first and which sentence comes afters 
+
+   -> these text and sentecen are data of internet only 
+
+   pre traning -> Broad foundation (built up
+   -> he knows diff between river bank and money bank
+
+
+untrained model -> (pre training ) -> base model ->(knows how language works) (genral trend )
+
+doesnot neccessarily know how to act like on assisant or follow specific instructions 
+
+-> how to specilize this ???
+-> fine tuning -> does not start from sacrth 
+
+-> pre trained model -> furthure training done on small curated high quality dataset 
+ -> now models adapt to the specific information given (exampel -> mdeical technolofgies )
+
+
+misconeption -> if we say act like a doctor 
+-> this is wrong because they dont have the data -> they cannot do this 
+
+-> fine tuning != prompting 
+
+-> curated data given -> parametrs adjusted to that data 
+
+
+wait isnt same as RAG ??/
+ 
+difference between RAG and fine tuning 
+
+
+
+ 
 
 
 
